@@ -1,0 +1,413 @@
+	.file	"recursion.c"
+	.text
+	.type	helper.2452, @function
+helper.2452:
+.LFB25:
+	.cfi_startproc
+	movl	%esi, %eax
+	cmpl	$1, %edi
+	jg	.L7
+	rep ret
+.L7:
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	imull	%edi, %eax
+	movl	%eax, %esi
+	subl	$1, %edi
+	call	helper.2452
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE25:
+	.size	helper.2452, .-helper.2452
+	.type	helper.2464, @function
+helper.2464:
+.LFB28:
+	.cfi_startproc
+	movl	%esi, %eax
+	cmpl	$3, %edi
+	jg	.L14
+	rep ret
+.L14:
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	leal	(%rsi,%rdx), %esi
+	addl	%ecx, %esi
+	subl	$1, %edi
+	movl	%edx, %ecx
+	movl	%eax, %edx
+	call	helper.2464
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE28:
+	.size	helper.2464, .-helper.2464
+	.type	helper.2474, @function
+helper.2474:
+.LFB31:
+	.cfi_startproc
+	movl	%esi, %eax
+	cmpl	$1, %edi
+	jle	.L20
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	testb	$1, %dil
+	je	.L23
+	addl	$1, %esi
+	subl	$1, %edi
+	call	helper.2474
+.L15:
+	addq	$8, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 8
+	ret
+.L23:
+	.cfi_restore_state
+	addl	%edi, %esi
+	movl	%edi, %eax
+	shrl	$31, %eax
+	addl	%eax, %edi
+	sarl	%edi
+	call	helper.2474
+	jmp	.L15
+.L20:
+	.cfi_def_cfa_offset 8
+	rep ret
+	.cfi_endproc
+.LFE31:
+	.size	helper.2474, .-helper.2474
+	.globl	fac
+	.type	fac, @function
+fac:
+.LFB23:
+	.cfi_startproc
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jg	.L31
+	rep ret
+.L31:
+	pushq	%rbx
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	movl	%edi, %ebx
+	leal	-1(%rdi), %edi
+	call	fac
+	imull	%ebx, %eax
+	popq	%rbx
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE23:
+	.size	fac, .-fac
+	.globl	facTR
+	.type	facTR, @function
+facTR:
+.LFB24:
+	.cfi_startproc
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movl	$1, %esi
+	call	helper.2452
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE24:
+	.size	facTR, .-facTR
+	.globl	g
+	.type	g, @function
+g:
+.LFB26:
+	.cfi_startproc
+	movl	$1, %eax
+	cmpl	$3, %edi
+	jg	.L41
+	rep ret
+.L41:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	pushq	%rbx
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 32
+	movl	%edi, %ebx
+	leal	-1(%rdi), %edi
+	call	g
+	movl	%eax, %ebp
+	leal	-2(%rbx), %edi
+	call	g
+	addl	%eax, %ebp
+	leal	-3(%rbx), %edi
+	call	g
+	addl	%ebp, %eax
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 24
+	popq	%rbx
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE26:
+	.size	g, .-g
+	.globl	gTR
+	.type	gTR, @function
+gTR:
+.LFB27:
+	.cfi_startproc
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movl	$1, %ecx
+	movl	$1, %edx
+	movl	$1, %esi
+	call	helper.2464
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE27:
+	.size	gTR, .-gTR
+	.globl	h
+	.type	h, @function
+h:
+.LFB29:
+	.cfi_startproc
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L49
+	pushq	%rbx
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	movl	%edi, %ebx
+	testb	$1, %dil
+	je	.L52
+	leal	-1(%rdi), %edi
+	call	h
+	addl	$1, %eax
+.L44:
+	popq	%rbx
+	.cfi_remember_state
+	.cfi_def_cfa_offset 8
+	ret
+.L52:
+	.cfi_restore_state
+	shrl	$31, %edi
+	addl	%ebx, %edi
+	sarl	%edi
+	call	h
+	addl	%ebx, %eax
+	jmp	.L44
+.L49:
+	.cfi_def_cfa_offset 8
+	.cfi_restore 3
+	rep ret
+	.cfi_endproc
+.LFE29:
+	.size	h, .-h
+	.globl	hTR
+	.type	hTR, @function
+hTR:
+.LFB30:
+	.cfi_startproc
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movl	$1, %esi
+	call	helper.2474
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE30:
+	.size	hTR, .-hTR
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"fac(1-10)   = "
+.LC1:
+	.string	"%d, "
+.LC2:
+	.string	"%d\n"
+.LC3:
+	.string	"facTR(1-10) = "
+.LC4:
+	.string	"g(1-10)   = "
+.LC5:
+	.string	"gTR(1-10) = "
+.LC6:
+	.string	"h(1-10)   = "
+.LC7:
+	.string	"hTR(1-10) = "
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB32:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	pushq	%rbx
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 32
+	leaq	.LC0(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %rbp
+.L56:
+	movl	%ebx, %edi
+	call	fac
+	movl	%eax, %edx
+	movq	%rbp, %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	jne	.L56
+	movl	$10, %edi
+	call	fac
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	leaq	.LC3(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %rbp
+.L57:
+	movl	%ebx, %edi
+	call	facTR
+	movl	%eax, %edx
+	movq	%rbp, %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	jne	.L57
+	movl	$10, %edi
+	call	facTR
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	leaq	.LC4(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %rbp
+.L58:
+	movl	%ebx, %edi
+	call	g
+	movl	%eax, %edx
+	movq	%rbp, %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	jne	.L58
+	movl	$10, %edi
+	call	g
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %rbp
+.L59:
+	movl	%ebx, %edi
+	call	gTR
+	movl	%eax, %edx
+	movq	%rbp, %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	jne	.L59
+	movl	$10, %edi
+	call	gTR
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	leaq	.LC6(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %rbp
+.L60:
+	movl	%ebx, %edi
+	call	h
+	movl	%eax, %edx
+	movq	%rbp, %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	jne	.L60
+	movl	$10, %edi
+	call	h
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	leaq	.LC7(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %rbp
+.L61:
+	movl	%ebx, %edi
+	call	hTR
+	movl	%eax, %edx
+	movq	%rbp, %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	jne	.L61
+	movl	$10, %edi
+	call	hTR
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk@PLT
+	movl	$0, %eax
+	addq	$8, %rsp
+	.cfi_def_cfa_offset 24
+	popq	%rbx
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE32:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 7.3.0-16ubuntu3) 7.3.0"
+	.section	.note.GNU-stack,"",@progbits

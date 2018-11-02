@@ -1,0 +1,23 @@
+Phuong Pham
+CS 558
+Assignment 4
+Fall 2018
+
+Question 2: Tail Recursion
+Part 2: Compiler Optimization
+In the file recursion.s1 where the -O1 flag was used for gcc, recursive functions are
+still in their recursive forms. These include the factorial function, the unknown
+g function, and the h function. Their tail recursive counterparts (facTR, gTR, and
+hTR) appear not in their recursive forms. However, upon close inspection, they are,
+in a way, still in recursive forms. This is because even though those tail recursive
+functions do not call themselves, they call their helper functions. These helper
+functions can be observed to call themselves however. This can be observed in the 
+assembly code of each function where there is a call instruction that calls the 
+functions again. As a result, -O1 optimization essentially still leave all six
+functions in their recursive forms. 
+In the file recursion.s2 where the -O2 flag was used, the codes are optimized even
+further as none but one function is in its recursive form. The g function still calls
+itself. The other five functions (fac, facTR, gTR, h, and hTR) now have conditional
+jumps instead of calling itself or any helper functions that may still be in their
+recursive forms. It may be interesting to see whether further optimization (-O3 flag)
+will result in the g function not be in recursive form. 

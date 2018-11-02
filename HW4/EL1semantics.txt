@@ -1,0 +1,21 @@
+Phuong Pham
+CS 558
+Assignment 4
+Fall 2018
+
+(Int i): "Const(i)"
+(Var x): "Load(x)"
+(+ e1 e2): e1.code + e2.code + "Plus"
+(- e1 e2): e1.code + e2.code + "Const(-1)" + "Times" + "Plus"
+(* e1 e2): e1.code + e2.code + "Times"
+(/ e1 e2): e1.code + e2.code + "Divrem" + "Pop"
+(% e1 e2): e1.code + e2.code + "Divrem"
+(<= e1 e2): e1.code + e2.code + "Lessequ"
+(:= x e): e.code + "Store(x)" + "Load(x)"
+(while e1 e2): "Label(1)" + e1.code + "Branchz(2)" + e2.code + "Pop" + "Branch(1)" + "Label(2)" + "Const(0)"
+(if e1 e2 e3): e1.code + "Branchz(1)" + e2.code + "Branch(2)" + "Label(1)" + e3.code + "Label(2)"
+(write e): e.code + "Print" + e.code
+(seq e1 e2): e1.code + "Pop" +  e2.code
+(skip): Const(0)
+(for x e1 e2 e3): e1.code + "Store(x)" + "Label(1)" + e2.code + "Load(x)" + "Lessequ" + "Branch(2)" + e3.code + "Pop" + "Load(x)" + "Const(1)" + "Plus" + "Store(x)" + "Branch(1)" + "Label(2)" + "Const(0)"
+

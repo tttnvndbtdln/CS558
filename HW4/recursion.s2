@@ -1,0 +1,580 @@
+	.file	"recursion.c"
+	.text
+	.p2align 4,,15
+	.globl	fac
+	.type	fac, @function
+fac:
+.LFB23:
+	.cfi_startproc
+	cmpl	$1, %edi
+	movl	$1, %eax
+	jle	.L4
+	.p2align 4,,10
+	.p2align 3
+.L3:
+	imull	%edi, %eax
+	subl	$1, %edi
+	cmpl	$1, %edi
+	jne	.L3
+	rep ret
+	.p2align 4,,10
+	.p2align 3
+.L4:
+	rep ret
+	.cfi_endproc
+.LFE23:
+	.size	fac, .-fac
+	.p2align 4,,15
+	.globl	facTR
+	.type	facTR, @function
+facTR:
+.LFB24:
+	.cfi_startproc
+	cmpl	$1, %edi
+	movl	$1, %eax
+	jle	.L10
+	.p2align 4,,10
+	.p2align 3
+.L9:
+	imull	%edi, %eax
+	subl	$1, %edi
+	cmpl	$1, %edi
+	jne	.L9
+	rep ret
+	.p2align 4,,10
+	.p2align 3
+.L10:
+	rep ret
+	.cfi_endproc
+.LFE24:
+	.size	facTR, .-facTR
+	.p2align 4,,15
+	.globl	g
+	.type	g, @function
+g:
+.LFB26:
+	.cfi_startproc
+	cmpl	$3, %edi
+	jle	.L17
+	pushq	%r12
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	xorl	%r12d, %r12d
+	pushq	%rbp
+	.cfi_def_cfa_offset 24
+	.cfi_offset 6, -24
+	pushq	%rbx
+	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -32
+	movl	%edi, %ebx
+.L14:
+	leal	-1(%rbx), %edi
+	call	g
+	leal	-2(%rbx), %edi
+	movl	%eax, %ebp
+	subl	$3, %ebx
+	call	g
+	addl	%eax, %ebp
+	addl	%ebp, %r12d
+	cmpl	$3, %ebx
+	jg	.L14
+	leal	1(%r12), %eax
+	popq	%rbx
+	.cfi_def_cfa_offset 24
+	popq	%rbp
+	.cfi_def_cfa_offset 16
+	popq	%r12
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L17:
+	.cfi_restore 3
+	.cfi_restore 6
+	.cfi_restore 12
+	movl	$1, %eax
+	ret
+	.cfi_endproc
+.LFE26:
+	.size	g, .-g
+	.p2align 4,,15
+	.globl	gTR
+	.type	gTR, @function
+gTR:
+.LFB27:
+	.cfi_startproc
+	cmpl	$3, %edi
+	jle	.L25
+	movl	$1, %esi
+	movl	$1, %edx
+	movl	$1, %ecx
+	jmp	.L24
+	.p2align 4,,10
+	.p2align 3
+.L26:
+	movl	%ecx, %edx
+	movl	%eax, %ecx
+.L24:
+	leal	(%rcx,%rdx), %eax
+	subl	$1, %edi
+	addl	%esi, %eax
+	cmpl	$3, %edi
+	movl	%edx, %esi
+	jne	.L26
+	rep ret
+	.p2align 4,,10
+	.p2align 3
+.L25:
+	movl	$1, %eax
+	ret
+	.cfi_endproc
+.LFE27:
+	.size	gTR, .-gTR
+	.p2align 4,,15
+	.globl	h
+	.type	h, @function
+h:
+.LFB29:
+	.cfi_startproc
+	cmpl	$1, %edi
+	jle	.L32
+	xorl	%eax, %eax
+	jmp	.L29
+	.p2align 4,,10
+	.p2align 3
+.L35:
+	addl	%edi, %eax
+	sarl	%edi
+	cmpl	$1, %edi
+	je	.L34
+.L29:
+	testb	$1, %dil
+	je	.L35
+	subl	$1, %edi
+	addl	$1, %eax
+	cmpl	$1, %edi
+	jne	.L29
+.L34:
+	addl	$1, %eax
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L32:
+	movl	$1, %eax
+	ret
+	.cfi_endproc
+.LFE29:
+	.size	h, .-h
+	.p2align 4,,15
+	.globl	hTR
+	.type	hTR, @function
+hTR:
+.LFB30:
+	.cfi_startproc
+	cmpl	$1, %edi
+	movl	$1, %eax
+	jg	.L38
+	jmp	.L36
+	.p2align 4,,10
+	.p2align 3
+.L45:
+	addl	%edi, %eax
+	sarl	%edi
+	cmpl	$1, %edi
+	je	.L36
+.L38:
+	testb	$1, %dil
+	je	.L45
+	subl	$1, %edi
+	addl	$1, %eax
+	cmpl	$1, %edi
+	jne	.L38
+.L36:
+	rep ret
+	.cfi_endproc
+.LFE30:
+	.size	hTR, .-hTR
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"fac(1-10)   = "
+.LC1:
+	.string	"%d, "
+.LC2:
+	.string	"%d\n"
+.LC3:
+	.string	"facTR(1-10) = "
+.LC4:
+	.string	"g(1-10)   = "
+.LC5:
+	.string	"gTR(1-10) = "
+.LC6:
+	.string	"h(1-10)   = "
+.LC7:
+	.string	"hTR(1-10) = "
+	.section	.text.startup,"ax",@progbits
+	.p2align 4,,15
+	.globl	main
+	.type	main, @function
+main:
+.LFB32:
+	.cfi_startproc
+	pushq	%r13
+	.cfi_def_cfa_offset 16
+	.cfi_offset 13, -16
+	pushq	%r12
+	.cfi_def_cfa_offset 24
+	.cfi_offset 12, -24
+	leaq	.LC0(%rip), %rsi
+	pushq	%rbp
+	.cfi_def_cfa_offset 32
+	.cfi_offset 6, -32
+	pushq	%rbx
+	.cfi_def_cfa_offset 40
+	.cfi_offset 3, -40
+	xorl	%eax, %eax
+	movl	$1, %ebp
+	movl	$1, %edi
+	leaq	.LC1(%rip), %r12
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 48
+	call	__printf_chk@PLT
+	cmpl	$1, %ebp
+	movl	%ebp, %eax
+	movl	$1, %edx
+	je	.L50
+	.p2align 4,,10
+	.p2align 3
+.L48:
+	leal	-1(%rax), %ebx
+	imull	%eax, %edx
+	cmpl	$1, %ebx
+	movl	%ebx, %eax
+	jne	.L48
+	xorl	%eax, %eax
+	movq	%r12, %rsi
+	movl	$1, %edi
+	call	__printf_chk@PLT
+	cmpl	$9, %ebp
+	je	.L84
+.L80:
+	addl	$1, %ebp
+	movl	$1, %edx
+	cmpl	$1, %ebp
+	movl	%ebp, %eax
+	jne	.L48
+.L50:
+	movq	%r12, %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	jmp	.L80
+	.p2align 4,,10
+	.p2align 3
+.L84:
+	movl	$10, %eax
+	.p2align 4,,10
+	.p2align 3
+.L49:
+	imull	%eax, %ebx
+	subl	$1, %eax
+	cmpl	$1, %eax
+	jne	.L49
+	leaq	.LC2(%rip), %rsi
+	movl	%ebx, %edx
+	movl	$1, %edi
+	xorl	%eax, %eax
+	movl	$1, %ebp
+	leaq	.LC1(%rip), %r12
+	call	__printf_chk@PLT
+	leaq	.LC3(%rip), %rsi
+	xorl	%eax, %eax
+	movl	$1, %edi
+	movl	%ebp, %ebx
+	call	__printf_chk@PLT
+	cmpl	$1, %ebp
+	movl	$1, %edx
+	je	.L54
+	.p2align 4,,10
+	.p2align 3
+.L52:
+	imull	%ebx, %edx
+	subl	$1, %ebx
+	cmpl	$1, %ebx
+	jne	.L52
+	xorl	%eax, %eax
+	movq	%r12, %rsi
+	movl	$1, %edi
+	call	__printf_chk@PLT
+	cmpl	$9, %ebp
+	je	.L85
+.L81:
+	addl	$1, %ebp
+	movl	$1, %edx
+	cmpl	$1, %ebp
+	movl	%ebp, %ebx
+	jne	.L52
+.L54:
+	movq	%r12, %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	jmp	.L81
+	.p2align 4,,10
+	.p2align 3
+.L85:
+	movl	$10, %r12d
+	.p2align 4,,10
+	.p2align 3
+.L53:
+	imull	%r12d, %ebx
+	subl	$1, %r12d
+	cmpl	$1, %r12d
+	jne	.L53
+	leaq	.LC2(%rip), %rsi
+	movl	%ebx, %edx
+	movl	$1, %edi
+	xorl	%eax, %eax
+	leaq	.LC1(%rip), %rbp
+	movl	$1, %ebx
+	call	__printf_chk@PLT
+	leaq	.LC4(%rip), %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	.p2align 4,,10
+	.p2align 3
+.L55:
+	movl	%ebx, %edi
+	addl	$1, %ebx
+	call	g
+	movq	%rbp, %rsi
+	movl	%eax, %edx
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	cmpl	$10, %ebx
+	jne	.L55
+	movl	$10, %edi
+	leaq	.LC1(%rip), %rbx
+	movl	$1, %ebp
+	call	g
+	leaq	.LC2(%rip), %rsi
+	movl	%eax, %edx
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	leaq	.LC5(%rip), %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	movl	$1, %edx
+	.p2align 4,,10
+	.p2align 3
+.L56:
+	xorl	%eax, %eax
+	movq	%rbx, %rsi
+	movl	$1, %edi
+	addl	$1, %ebp
+	call	__printf_chk@PLT
+	cmpl	$10, %ebp
+	je	.L87
+	cmpl	$3, %ebp
+	jle	.L88
+	movl	$1, %edi
+	movl	$1, %ecx
+	movl	$1, %esi
+	movl	%ebp, %eax
+	.p2align 4,,10
+	.p2align 3
+.L57:
+	leal	(%rcx,%rsi), %edx
+	subl	$1, %eax
+	addl	%edi, %edx
+	cmpl	$3, %eax
+	movl	%ecx, %edi
+	je	.L56
+	movl	%esi, %ecx
+	movl	%edx, %esi
+	jmp	.L57
+	.p2align 4,,10
+	.p2align 3
+.L87:
+	movl	$1, %ecx
+	movl	$1, %esi
+	movl	$7, %eax
+	jmp	.L58
+	.p2align 4,,10
+	.p2align 3
+.L89:
+	movl	%esi, %ecx
+	movl	%edx, %esi
+.L58:
+	leal	(%rsi,%rcx), %edx
+	addl	%r12d, %edx
+	subl	$1, %eax
+	movl	%ecx, %r12d
+	jne	.L89
+	leaq	.LC2(%rip), %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	movl	$1, %ebx
+	leaq	.LC1(%rip), %r12
+	call	__printf_chk@PLT
+	leaq	.LC6(%rip), %rsi
+	xorl	%eax, %eax
+	movl	$1, %edi
+	call	__printf_chk@PLT
+	cmpl	$1, %ebx
+	movl	%ebx, %eax
+	je	.L65
+	.p2align 4,,10
+	.p2align 3
+.L101:
+	xorl	%edx, %edx
+	jmp	.L66
+	.p2align 4,,10
+	.p2align 3
+.L100:
+	addl	%eax, %edx
+	sarl	%eax
+	cmpl	$1, %eax
+	je	.L61
+.L66:
+	testb	$1, %al
+	je	.L100
+	subl	$1, %eax
+	addl	$1, %edx
+	cmpl	$1, %eax
+	jne	.L66
+.L61:
+	addl	$1, %edx
+	xorl	%eax, %eax
+	movq	%r12, %rsi
+	movl	$1, %edi
+	call	__printf_chk@PLT
+	cmpl	$9, %ebx
+	je	.L90
+.L82:
+	addl	$1, %ebx
+	cmpl	$1, %ebx
+	movl	%ebx, %eax
+	jne	.L101
+.L65:
+	movl	$1, %edx
+	movq	%r12, %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	jmp	.L82
+	.p2align 4,,10
+	.p2align 3
+.L90:
+	movl	$10, %eax
+	xorl	%edx, %edx
+	jmp	.L64
+	.p2align 4,,10
+	.p2align 3
+.L103:
+	addl	%eax, %edx
+	sarl	%eax
+	cmpl	$1, %eax
+	je	.L102
+.L64:
+	testb	$1, %al
+	je	.L103
+	subl	$1, %eax
+	addl	$1, %edx
+	cmpl	$1, %eax
+	jne	.L64
+.L102:
+	leaq	.LC2(%rip), %rsi
+	addl	$1, %edx
+	movl	$1, %edi
+	xorl	%eax, %eax
+	movl	$1, %r12d
+	leaq	.LC1(%rip), %r13
+	call	__printf_chk@PLT
+	leaq	.LC7(%rip), %rsi
+	xorl	%eax, %eax
+	movl	$1, %edi
+	movl	%r12d, %ebx
+	call	__printf_chk@PLT
+	cmpl	$1, %r12d
+	movl	$1, %edx
+	jne	.L76
+	jmp	.L75
+	.p2align 4,,10
+	.p2align 3
+.L104:
+	addl	%ebx, %edx
+	sarl	%ebx
+	cmpl	$1, %ebx
+	je	.L71
+.L76:
+	testb	$1, %bl
+	je	.L104
+	subl	$1, %ebx
+	addl	$1, %edx
+	cmpl	$1, %ebx
+	jne	.L76
+.L71:
+	xorl	%eax, %eax
+	movq	%r13, %rsi
+	movl	$1, %edi
+	call	__printf_chk@PLT
+	cmpl	$9, %r12d
+	je	.L74
+.L83:
+	addl	$1, %r12d
+	movl	$1, %edx
+	cmpl	$1, %r12d
+	movl	%r12d, %ebx
+	jne	.L76
+.L75:
+	movq	%r13, %rsi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	jmp	.L83
+	.p2align 4,,10
+	.p2align 3
+.L105:
+	addl	%ebp, %ebx
+	sarl	%ebp
+	cmpl	$1, %ebp
+	je	.L77
+.L74:
+	testb	$1, %bpl
+	je	.L105
+	subl	$1, %ebp
+	addl	$1, %ebx
+	cmpl	$1, %ebp
+	jne	.L74
+.L77:
+	leaq	.LC2(%rip), %rsi
+	movl	%ebx, %edx
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk@PLT
+	addq	$8, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 40
+	xorl	%eax, %eax
+	popq	%rbx
+	.cfi_def_cfa_offset 32
+	popq	%rbp
+	.cfi_def_cfa_offset 24
+	popq	%r12
+	.cfi_def_cfa_offset 16
+	popq	%r13
+	.cfi_def_cfa_offset 8
+	ret
+.L88:
+	.cfi_restore_state
+	movl	$1, %edx
+	jmp	.L56
+	.cfi_endproc
+.LFE32:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 7.3.0-16ubuntu3) 7.3.0"
+	.section	.note.GNU-stack,"",@progbits
